@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public float moveSpeed = 5f; // The player's movement speed
     public float jumpForce = 10f; // The force of the player's jump
     private bool isGrounded; // Whether or not the player is touching the ground
@@ -31,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
-        Debug.Log("Grounded: " + isGrounded);
 
         // Handle jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)

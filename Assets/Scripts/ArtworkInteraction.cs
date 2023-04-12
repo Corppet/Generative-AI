@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class ArtworkInteraction : MonoBehaviour
 {
-
     public AudioClip interactSound;
 
-    private bool hasInteracted = false;
+    public bool hasInteracted = false;
 
     private void OnTriggerEnter(Collider other)
     {

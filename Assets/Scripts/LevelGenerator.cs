@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-
     public int maxRooms = 20;
     public int minRoomSize = 5;
     public int maxRoomSize = 20;
@@ -62,5 +61,4 @@ public class LevelGenerator : MonoBehaviour
             door.CheckConnection();
         }
     }
-
 }

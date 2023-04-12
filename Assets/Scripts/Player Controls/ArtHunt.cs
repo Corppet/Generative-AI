@@ -1,11 +1,24 @@
 using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
+[RequireComponent(typeof(AudioSource))]
 public class ArtHunt : MonoBehaviour
 {
-
+    public AudioClip[] collectSounds;
     public int totalArtPieces;
     private int collectedArtPieces = 0;
+    private AudioSource audioSource;
+
+    public void PlayCollect()
+    {
+        audioSource.PlayOneShot(collectSounds[Random.Range(0, collectSounds.Length)], audioSource.volume);
+    }
+
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     void Start()
     {
@@ -21,20 +34,7 @@ public class ArtHunt : MonoBehaviour
 
             // Call the CollectArtPiece() method in the GameManager
             GameManager.instance.CollectArtPiece();
+            PlayCollect();
         }
-    }
-
-    void Update()
-    {
-        // If the player has collected all the art pieces, end the game
-        if (collectedArtPieces == totalArtPieces)
-        {
-            EndGame();
-        }
-    }
-
-    void EndGame()
-    {
-        // Do something to end the game, such as displaying a victory message or returning to the main menu
     }
 }
