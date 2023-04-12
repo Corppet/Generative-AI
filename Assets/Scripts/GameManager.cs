@@ -7,12 +7,28 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     [HideInInspector] public static GameManager instance;
+    [HideInInspector] public bool isInPlay;
 
     public TMP_Text artPiecesText;
     public GameObject gameOverPanel;
     public float gameOverDelay = 2f;
     private int totalArtPieces;
     private int collectedArtPieces;
+
+    private void Awake()
+    {
+        // Make the GameManager a singleton
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        isInPlay = true;
+    }
 
     void Start()
     {
@@ -48,13 +64,15 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameOverDelay());
 
         // Pause the game
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
     }
 
     IEnumerator GameOverDelay()
     {
         yield return new WaitForSecondsRealtime(gameOverDelay);
         gameOverPanel.SetActive(true);
+        isInPlay = false;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void RestartGame()
