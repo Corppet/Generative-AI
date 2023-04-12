@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [HideInInspector] public static GameManager instance;
 
-    public Text artPiecesText;
+    public TMP_Text artPiecesText;
     public GameObject gameOverPanel;
     public float gameOverDelay = 2f;
     private int totalArtPieces;

@@ -9,12 +9,13 @@ public class LevelGenerator : MonoBehaviour
     public int minRoomSize = 5;
     public int maxRoomSize = 20;
     public GameObject[] roomPrefabs;
+    public Transform roomsParent;
 
     // Start is called before the first frame update
     void Start()
     {
         // Select a random starting room
-        GameObject currentRoom = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Length)]);
+        GameObject currentRoom = Instantiate(roomPrefabs[Random.Range(0, roomPrefabs.Length)], roomsParent);
 
         // Keep track of all instantiated rooms
         List<GameObject> instantiatedRooms = new List<GameObject>();
@@ -31,11 +32,17 @@ public class LevelGenerator : MonoBehaviour
             GameObject newRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Length)];
 
             // Calculate the position of the new room
-            Vector3 newPosition = chosenDoor.transform.position - chosenDoor.doorAnchor.localPosition 
-                + newRoomPrefab.GetComponentInChildren<Door>().doorAnchor.localPosition;
+            //Vector3 newPosition = chosenDoor.transform.position - chosenDoor.doorAnchor.localPosition 
+            //    + newRoomPrefab.GetComponentInChildren<Door>().doorAnchor.localPosition;
+            Vector3 newPosition = new Vector3
+            {
+                x = currentRoom.transform.position.x,
+                y = currentRoom.transform.position.y + 12.5f,
+                z = currentRoom.transform.position.z
+            };
 
             // Instantiate the new room
-            GameObject newRoom = Instantiate(newRoomPrefab, newPosition, Quaternion.identity);
+            GameObject newRoom = Instantiate(newRoomPrefab, newPosition, Quaternion.identity, roomsParent);
 
             // Connect the new room to the current room
             chosenDoor.Connect(newRoom.GetComponentInChildren<Door>());
@@ -45,6 +52,14 @@ public class LevelGenerator : MonoBehaviour
 
             // Choose the new room as the current room for the next iteration
             currentRoom = newRoom;
+        }
+
+        // Delete any null doors
+        Door[] allDoors = roomsParent.GetComponentsInChildren<Door>();
+        Debug.Log(allDoors.Length);
+        foreach (Door door in allDoors)
+        {
+            door.CheckConnection();
         }
     }
 

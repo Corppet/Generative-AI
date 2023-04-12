@@ -15,11 +15,12 @@ public class ArtHunt : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // If the player collides with an art piece, add it to their collection
-        if (other.gameObject.CompareTag("ArtPiece"))
+        if (other.gameObject.tag == "ArtPiece")
         {
-            other.gameObject.SetActive(false);
-            collectedArtPieces++;
+            Destroy(other.gameObject);
+
+            // Call the CollectArtPiece() method in the GameManager
+            GameManager.instance.CollectArtPiece();
         }
     }
 

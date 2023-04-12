@@ -14,11 +14,26 @@ public class Door : MonoBehaviour
         otherDoor.connectedDoor = this;
     }
 
+    public void CheckConnection()
+    {
+        if (connectedDoor == null)
+        {
+            Debug.Log("Door is not connected.");
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("Door is connected.");
+        }
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         // Check if the other collider is the player
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player entered door.");
+
             // Teleport the player to the connected door
             other.transform.position = connectedDoor.doorAnchor.position;
         }

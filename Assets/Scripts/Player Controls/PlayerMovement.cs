@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement * moveSpeed * Time.deltaTime);
 
         // Check if the player is on the ground
-        if (Physics.Raycast(transform.position, -Vector3.up, 0.1f))
+        if (Physics.Raycast(transform.position, -Vector3.up, 1.1f))
         {
             isGrounded = true;
         }
@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
+        Debug.Log("Grounded: " + isGrounded);
 
         // Handle jumping
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
